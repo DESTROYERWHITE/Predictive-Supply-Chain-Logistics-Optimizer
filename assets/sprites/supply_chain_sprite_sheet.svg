@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="256" viewBox="0 0 512 256" role="img" aria-labelledby="title desc">
+  <title id="title">Supply chain optimizer sprite sheet</title>
+  <desc id="desc">Eight logistics and forecasting sprites for the dashboard: warehouse, parcel, truck, route, demand chart, calendar, model, and alert.</desc>
+  <defs>
+    <linearGradient id="teal" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#18a999"/>
+      <stop offset="1" stop-color="#087f8c"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f9c74f"/>
+      <stop offset="1" stop-color="#f8961e"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#4cc9f0"/>
+      <stop offset="1" stop-color="#4361ee"/>
+    </linearGradient>
+    <style>
+      .tile{fill:#f7fafc;stroke:#d8e2ec;stroke-width:2}
+      .ink{fill:#172a3a}
+      .muted{fill:#6b7a90}
+      .line{fill:none;stroke:#172a3a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+      .fine{fill:none;stroke:#6b7a90;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+  </defs>
+
+  <rect width="512" height="256" fill="#ffffff"/>
+
+  <g id="warehouse" transform="translate(0 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path d="M16 30 L32 18 L48 30 V48 H16 Z" fill="url(#teal)"/>
+    <rect x="24" y="36" width="16" height="12" fill="#ffffff" opacity=".9"/>
+    <path class="fine" d="M20 30 H44"/>
+  </g>
+
+  <g id="parcel" transform="translate(64 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path d="M18 24 L32 16 L46 24 V43 L32 51 L18 43 Z" fill="url(#amber)"/>
+    <path class="fine" d="M18 24 L32 32 L46 24 M32 32 V50"/>
+  </g>
+
+  <g id="truck" transform="translate(128 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path d="M15 28 H36 V43 H15 Z" fill="url(#blue)"/>
+    <path d="M36 32 H46 L51 38 V43 H36 Z" fill="#18a999"/>
+    <circle cx="23" cy="45" r="4" class="ink"/>
+    <circle cx="44" cy="45" r="4" class="ink"/>
+  </g>
+
+  <g id="route" transform="translate(192 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path class="line" d="M18 44 C24 22 40 44 46 20"/>
+    <circle cx="18" cy="44" r="5" fill="#f8961e"/>
+    <circle cx="46" cy="20" r="5" fill="#18a999"/>
+  </g>
+
+  <g id="demand-chart" transform="translate(256 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path class="fine" d="M18 46 H48 M18 46 V18"/>
+    <path class="line" d="M20 40 L28 32 L35 35 L47 22"/>
+    <circle cx="47" cy="22" r="4" fill="#f8961e"/>
+  </g>
+
+  <g id="calendar" transform="translate(320 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <rect x="17" y="19" width="30" height="29" rx="4" fill="#ffffff" stroke="#172a3a" stroke-width="4"/>
+    <path d="M17 27 H47" stroke="#18a999" stroke-width="5"/>
+    <circle cx="25" cy="36" r="3" fill="#f8961e"/>
+    <circle cx="35" cy="36" r="3" fill="#4361ee"/>
+  </g>
+
+  <g id="model" transform="translate(384 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <circle cx="23" cy="23" r="6" fill="#18a999"/>
+    <circle cx="42" cy="23" r="6" fill="#4361ee"/>
+    <circle cx="32" cy="43" r="6" fill="#f8961e"/>
+    <path class="fine" d="M27 26 L32 38 M38 27 L34 38 M29 23 H36"/>
+  </g>
+
+  <g id="alert" transform="translate(448 0)">
+    <rect class="tile" x="8" y="8" width="48" height="48" rx="8"/>
+    <path d="M32 16 L50 47 H14 Z" fill="url(#amber)"/>
+    <rect x="30" y="27" width="4" height="11" rx="2" class="ink"/>
+    <circle cx="32" cy="43" r="2.5" class="ink"/>
+  </g>
+
+  <g id="hero-strip" transform="translate(0 80)">
+    <rect x="8" y="8" width="496" height="152" rx="12" fill="#eef8f6"/>
+    <path d="M42 108 C91 34 130 140 179 74 C228 8 282 113 329 55 C382 -9 421 91 470 30" fill="none" stroke="#18a999" stroke-width="8" stroke-linecap="round" opacity=".85"/>
+    <rect x="42" y="83" width="62" height="46" rx="8" fill="#ffffff" stroke="#172a3a" stroke-width="4"/>
+    <path d="M42 83 L73 60 L104 83" fill="#4361ee"/>
+    <rect x="132" y="95" width="70" height="34" rx="6" fill="#4cc9f0"/>
+    <path d="M202 104 H232 L246 118 V129 H202 Z" fill="#18a999"/>
+    <circle cx="151" cy="132" r="7" fill="#172a3a"/>
+    <circle cx="224" cy="132" r="7" fill="#172a3a"/>
+    <rect x="278" y="68" width="78" height="61" rx="10" fill="#ffffff" stroke="#172a3a" stroke-width="4"/>
+    <path d="M294 112 L308 96 L323 101 L342 78" fill="none" stroke="#f8961e" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M389 83 L418 66 L447 83 V119 L418 136 L389 119 Z" fill="#f9c74f" stroke="#172a3a" stroke-width="4"/>
+    <path d="M389 83 L418 100 L447 83 M418 100 V135" fill="none" stroke="#172a3a" stroke-width="3" opacity=".6"/>
+  </g>
+</svg>
