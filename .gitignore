@@ -5,6 +5,7 @@ venv/
 env/
 .streamlit/
 *.log
+data/*.csv
 build/
 dist/
 *.spec

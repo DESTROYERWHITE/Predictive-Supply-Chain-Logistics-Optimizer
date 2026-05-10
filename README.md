@@ -1,6 +1,6 @@
 # Predictive Supply Chain & Logistics Optimizer
 
-This project trains a machine-learning demand forecaster on the Olist Brazilian e-commerce dataset in `data/` and exposes the result through a Streamlit dashboard.
+This project trains a machine-learning demand forecaster on the Olist Brazilian e-commerce dataset and exposes the result through a Streamlit dashboard.
 
 ## Project Highlights
 
@@ -21,12 +21,14 @@ This project trains a machine-learning demand forecaster on the Olist Brazilian 
 ├── run_dashboard.bat                   # Double-click dashboard launcher
 ├── build_exe.bat                       # Builds dist/SupplyChainDashboard.exe
 ├── assets/sprites/                     # Dashboard visual sprite sheet
-├── data/                               # Olist CSV files
+├── data/                               # Dataset setup instructions
 ├── scripts/evaluate_model.py           # Validation metrics script
 └── src/supply_chain_optimizer/         # Forecasting pipeline
 ```
 
 ## Run Locally
+
+First download the Olist dataset from Kaggle and place the CSV files in `data/`. See `data/README.md` for the exact filenames.
 
 ```bash
 pip install -r requirements.txt
