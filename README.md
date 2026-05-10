@@ -2,6 +2,18 @@
 
 This project trains a machine-learning demand forecaster on the Olist Brazilian e-commerce dataset and exposes the result through a Streamlit dashboard.
 
+## Benchmark Results
+
+Validated on a chronological 90-day holdout across all product categories:
+
+| Metric | Model | Same-as-yesterday baseline |
+| --- | ---: | ---: |
+| MAE | 1.3429 | 1.6117 |
+| RMSE | 2.6111 | 3.1988 |
+| R-squared | 0.8321 | 0.7480 |
+
+The model beats the naive baseline on MAE and RMSE and clears the target `R2 > 0.75`. The dashboard also includes feature importance and per-category validation so aggregate metrics do not hide weak category-level performance.
+
 ## Project Highlights
 
 - Ingests Olist orders, order items, products, and category translations.
@@ -50,23 +62,11 @@ run_dashboard.bat
 python scripts/evaluate_model.py
 ```
 
-Current chronological holdout result:
-
-| Metric | Model | Same-as-yesterday baseline |
-| --- | ---: | ---: |
-| MAE | 1.3429 | 1.6117 |
-| RMSE | 2.6111 | 3.1988 |
-| R-squared | 0.8321 | 0.7480 |
-
-The model beats the baseline on MAE and RMSE and clears the target `R2 > 0.75`.
-
 The evaluation script also prints:
 
 - The top 10 categories with the lowest MAE.
 - The bottom 5 categories with the highest MAE.
 - The top 10 permutation feature importances.
-
-The Streamlit dashboard includes a feature-importance bar chart and a full per-category validation table so aggregate metrics do not hide weak category-level performance.
 
 ## Build A Windows Executable
 

@@ -263,6 +263,8 @@ def forecast_next_7_days(bundle: ForecastBundle, category: str) -> pd.DataFrame:
     working = history.sort_values("date").reset_index(drop=True)
 
     for step in range(1, 8):
+        # Rebuild after each predicted day so later horizons only use prior predictions,
+        # not future actuals; this avoids lookahead leakage in the demo forecast.
         next_date = working["date"].max() + pd.Timedelta(days=1)
         candidate = pd.concat(
             [

@@ -43,6 +43,7 @@ metric_cols[2].metric("Model RMSE", f"{bundle.metrics['RMSE']:.2f}")
 metric_cols[3].metric("Baseline RMSE", f"{bundle.baseline_metrics['RMSE']:.2f}")
 metric_cols[4].metric("Model R2", f"{bundle.metrics['R2']:.3f}")
 metric_cols[5].metric("Baseline R2", f"{bundle.baseline_metrics['R2']:.3f}")
+st.caption("Baseline means a naive same-as-yesterday prediction for each product category.")
 
 left, right = st.columns([0.32, 0.68], gap="large")
 
