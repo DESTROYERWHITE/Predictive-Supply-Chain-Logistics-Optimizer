@@ -12,6 +12,7 @@ os.environ.setdefault("MKL_NUM_THREADS", "1")
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.inspection import permutation_importance
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
@@ -58,6 +59,8 @@ class ForecastBundle:
     category_lookup: dict[str, int]
     metrics: dict[str, float]
     baseline_metrics: dict[str, float]
+    feature_importance: pd.DataFrame
+    category_metrics: pd.DataFrame
     demand_history: pd.DataFrame
     supervised_frame: pd.DataFrame
     last_train_date: pd.Timestamp
@@ -179,12 +182,16 @@ def train_forecaster(data_dir: Path = DATA_DIR, test_days: int = 90) -> Forecast
 
     metrics = _metrics(actual, predictions)
     baseline_metrics = _metrics(actual, baseline)
+    feature_importance = _permutation_feature_importance(model, test)
+    category_metrics = _category_metrics(test, predictions, baseline)
 
     return ForecastBundle(
         model=model,
         category_lookup=category_lookup,
         metrics=metrics,
         baseline_metrics=baseline_metrics,
+        feature_importance=feature_importance,
+        category_metrics=category_metrics,
         demand_history=panel,
         supervised_frame=supervised,
         last_train_date=panel["date"].max(),
@@ -197,6 +204,54 @@ def _metrics(actual: np.ndarray, predicted: np.ndarray) -> dict[str, float]:
         "RMSE": float(np.sqrt(mean_squared_error(actual, predicted))),
         "R2": float(r2_score(actual, predicted)),
     }
+
+
+def _permutation_feature_importance(
+    model: HistGradientBoostingRegressor,
+    test: pd.DataFrame,
+    sample_size: int = 5000,
+) -> pd.DataFrame:
+    sample = test.sample(n=min(sample_size, len(test)), random_state=42)
+    result = permutation_importance(
+        model,
+        sample[FEATURE_COLUMNS],
+        sample["demand"],
+        n_repeats=5,
+        random_state=42,
+        scoring="neg_mean_absolute_error",
+    )
+    importance = pd.DataFrame(
+        {
+            "feature": FEATURE_COLUMNS,
+            "importance": result.importances_mean,
+            "importance_std": result.importances_std,
+        }
+    )
+    return importance.sort_values("importance", ascending=False).reset_index(drop=True)
+
+
+def _category_metrics(test: pd.DataFrame, predictions: np.ndarray, baseline: np.ndarray) -> pd.DataFrame:
+    scored = test[["category", "demand"]].copy()
+    scored["prediction"] = predictions
+    scored["baseline"] = baseline
+    scored["abs_error"] = (scored["demand"] - scored["prediction"]).abs()
+    scored["baseline_abs_error"] = (scored["demand"] - scored["baseline"]).abs()
+    scored["squared_error"] = (scored["demand"] - scored["prediction"]) ** 2
+
+    grouped = (
+        scored.groupby("category", as_index=False)
+        .agg(
+            observations=("demand", "size"),
+            avg_daily_demand=("demand", "mean"),
+            MAE=("abs_error", "mean"),
+            baseline_MAE=("baseline_abs_error", "mean"),
+            RMSE=("squared_error", lambda values: float(np.sqrt(values.mean()))),
+        )
+        .sort_values("MAE", ascending=True)
+        .reset_index(drop=True)
+    )
+    grouped["MAE_delta_vs_baseline"] = grouped["MAE"] - grouped["baseline_MAE"]
+    return grouped
 
 
 def forecast_next_7_days(bundle: ForecastBundle, category: str) -> pd.DataFrame:

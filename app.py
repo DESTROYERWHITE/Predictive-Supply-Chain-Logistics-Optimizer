@@ -40,8 +40,8 @@ metric_cols[0].metric("Model MAE", f"{bundle.metrics['MAE']:.2f}")
 metric_cols[1].metric("Baseline MAE", f"{bundle.baseline_metrics['MAE']:.2f}")
 metric_cols[2].metric("Model RMSE", f"{bundle.metrics['RMSE']:.2f}")
 metric_cols[3].metric("Baseline RMSE", f"{bundle.baseline_metrics['RMSE']:.2f}")
-metric_cols[4].metric("Model R²", f"{bundle.metrics['R2']:.3f}")
-metric_cols[5].metric("Baseline R²", f"{bundle.baseline_metrics['R2']:.3f}")
+metric_cols[4].metric("Model R2", f"{bundle.metrics['R2']:.3f}")
+metric_cols[5].metric("Baseline R2", f"{bundle.baseline_metrics['R2']:.3f}")
 
 left, right = st.columns([0.32, 0.68], gap="large")
 
@@ -56,6 +56,10 @@ with left:
         use_container_width=True,
         hide_index=True,
     )
+
+    importance_plot = bundle.feature_importance.head(10).set_index("feature")[["importance"]]
+    st.subheader("Top demand drivers")
+    st.bar_chart(importance_plot, use_container_width=True)
 
 with right:
     forecast = forecast_next_7_days(bundle, selected_category)
@@ -76,6 +80,15 @@ with right:
 
     st.subheader("Next 7 days")
     st.dataframe(forecast, use_container_width=True, hide_index=True)
+
+st.subheader("Per-category validation")
+category_display = bundle.category_metrics.copy()
+category_display["avg_daily_demand"] = category_display["avg_daily_demand"].round(2)
+category_display["MAE"] = category_display["MAE"].round(3)
+category_display["baseline_MAE"] = category_display["baseline_MAE"].round(3)
+category_display["MAE_delta_vs_baseline"] = category_display["MAE_delta_vs_baseline"].round(3)
+category_display["RMSE"] = category_display["RMSE"].round(3)
+st.dataframe(category_display, use_container_width=True, hide_index=True)
 
 st.divider()
 st.write(
