@@ -10,6 +10,9 @@ from src.supply_chain_optimizer.forecasting import (
 )
 
 
+MODEL_CACHE_VERSION = "2026-05-10-feature-importance-v2"
+
+
 st.set_page_config(
     page_title="Predictive Supply Chain Optimizer",
     layout="wide",
@@ -17,11 +20,17 @@ st.set_page_config(
 
 
 @st.cache_resource(show_spinner="Training demand forecasting model...")
-def get_bundle():
+def get_bundle(cache_version: str):
+    # cache_version is intentionally part of the signature so Streamlit invalidates
+    # older ForecastBundle objects when the model payload changes.
     return train_forecaster()
 
 
-bundle = get_bundle()
+bundle = get_bundle(MODEL_CACHE_VERSION)
+if not hasattr(bundle, "feature_importance") or not hasattr(bundle, "category_metrics"):
+    st.cache_resource.clear()
+    bundle = get_bundle(f"{MODEL_CACHE_VERSION}-fresh")
+
 summary = category_summary(bundle)
 
 st.title("Predictive Supply Chain & Logistics Optimizer")
@@ -39,7 +48,6 @@ left, right = st.columns([0.32, 0.68], gap="large")
 
 with left:
     categories = summary["category"].tolist()
-    default_category = categories[0] if categories else None
     selected_category = st.selectbox("Product category", categories, index=0)
 
     recent_days = st.slider("Historical chart window", min_value=30, max_value=180, value=90, step=30)
