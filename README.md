@@ -10,7 +10,7 @@ This project trains a machine-learning demand forecaster on the Olist Brazilian 
 - Trains a scikit-learn `HistGradientBoostingRegressor`.
 - Validates against a same-as-yesterday baseline with MAE, RMSE, and R-squared.
 - Predicts the next 7 days of demand for a selected category.
-- Includes dashboard sprites in `assets/sprites/` and Windows launchers for non-terminal use.
+- Includes Windows launchers for non-terminal use.
 
 ## Model Choice
 
@@ -24,7 +24,6 @@ The benchmark suggests XGBoost, but this implementation uses scikit-learn's `His
 |-- launcher.py                         # Python launcher used by the executable build
 |-- run_dashboard.bat                   # Double-click dashboard launcher
 |-- build_exe.bat                       # Builds dist/SupplyChainDashboard.exe
-|-- assets/sprites/                     # Dashboard visual sprite sheet
 |-- data/                               # Dataset setup instructions
 |-- scripts/evaluate_model.py           # Validation metrics script
 `-- src/supply_chain_optimizer/         # Forecasting pipeline

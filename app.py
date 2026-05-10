@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import pandas as pd
 import streamlit as st
-from pathlib import Path
 
 from src.supply_chain_optimizer.forecasting import (
     category_summary,
@@ -24,15 +23,8 @@ def get_bundle():
 
 bundle = get_bundle()
 summary = category_summary(bundle)
-sprite_path = Path("assets/sprites/supply_chain_sprite_sheet.svg")
 
-header_cols = st.columns([0.74, 0.26], vertical_alignment="center")
-with header_cols[0]:
-    st.title("Predictive Supply Chain & Logistics Optimizer")
-with header_cols[1]:
-    if sprite_path.exists():
-        st.image(str(sprite_path), use_container_width=True)
-
+st.title("Predictive Supply Chain & Logistics Optimizer")
 st.caption("Daily inventory demand forecasting from the Olist Brazilian e-commerce dataset")
 
 metric_cols = st.columns(6)

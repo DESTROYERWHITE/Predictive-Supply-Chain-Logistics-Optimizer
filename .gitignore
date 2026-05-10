@@ -8,6 +8,7 @@ env/
 data/*.csv
 build/
 dist/
+SupplyChainDashboard.exe
 *.spec
 streamlit.out.log
 streamlit.err.log
